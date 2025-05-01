@@ -12,7 +12,7 @@
 	<artifactId>smart-stock-analysis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>smart-stock-analysis</name>
-	<description>	Smart stock prediction and analysis</description>
+	<description>Smart stock prediction and analysis</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -28,7 +28,6 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<spring-ai.version>1.0.0-M7</spring-ai.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,9 +36,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-starter-model-openai</artifactId>
+			<artifactId>spring-ai-openai</artifactId>
+			<version>1.0.0-M8</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -61,17 +60,45 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- DJL Core API -->
+		<dependency>
+			<groupId>ai.djl</groupId>
+			<artifactId>api</artifactId>
+			<version>0.32.0</version>
+		</dependency>
+
+		<!-- MXNet backend -->
+		<dependency>
+			<groupId>ai.djl.mxnet</groupId>
+			<artifactId>mxnet-engine</artifactId>
+			<version>0.32.0</version>
+		</dependency>
+		<!-- Modelli pre-addestrati -->
+		<dependency>
+			<groupId>ai.djl.mxnet</groupId>
+			<artifactId>mxnet-model-zoo</artifactId>
+			<version>0.32.0</version>
+		</dependency>
+		<!-- MLP model block -->
+		<dependency>
+			<groupId>ai.djl</groupId>
+			<artifactId>model-zoo</artifactId>
+			<version>0.32.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.yahoofinance-api</groupId>
+			<artifactId>YahooFinanceAPI</artifactId>
+			<version>3.15.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>6.1.4</version>
+		</dependency>
+
+
 	</dependencies>
 	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.ai</groupId>
-				<artifactId>spring-ai-bom</artifactId>
-				<version>${spring-ai.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
 	</dependencyManagement>
 
 	<build>
@@ -106,5 +133,25 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven Central</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/release</url>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+		<repository>
+			<id>djl-repo</id>
+			<name>DJL Repository</name>
+			<url>https://djl.ai/maven</url>
+		</repository>
+	</repositories>
 
 </project>
