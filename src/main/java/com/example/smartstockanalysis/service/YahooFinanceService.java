@@ -2,6 +2,7 @@ package com.example.smartstockanalysis.service;
 
 import com.example.smartstockanalysis.model.StockData;
 import com.example.smartstockanalysis.utils.DataPreprocessingUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -16,11 +17,17 @@ import java.util.List;
 @Service
 public class YahooFinanceService {
 
+    @Value("${stock.default-ticker:AAPL}")
+    private String defaultTicker;
+
+    @Value("${stock.days:365}")
+    private int days;
+
     public List<StockData> getStockData(String ticker) {
         try {
             Calendar from = Calendar.getInstance();
             Calendar to = Calendar.getInstance();
-            from.add(Calendar.YEAR, -1);
+            from.add(Calendar.DAY_OF_YEAR, -days);
 
             Stock stock = YahooFinance.get(ticker);
             List<HistoricalQuote> history = stock.getHistory(from, to, Interval.DAILY);
@@ -44,6 +51,10 @@ public class YahooFinanceService {
         } catch (IOException e) {
             throw new RuntimeException("Errore durante il download dei dati da Yahoo Finance", e);
         }
+    }
+
+    public List<StockData> getDefaultStockData() {
+        return getStockData(defaultTicker);
     }
 
     public List<Double> preprocessStockData(List<StockData> stockData) {
