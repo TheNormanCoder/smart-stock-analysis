@@ -2,6 +2,7 @@ package com.example.smartstockanalysis.controller;
 
 import com.example.smartstockanalysis.model.PredictionResult;
 import com.example.smartstockanalysis.model.StockData;
+import com.example.smartstockanalysis.service.AlphaVantageService;
 import com.example.smartstockanalysis.service.PredictionService;
 import com.example.smartstockanalysis.service.YahooFinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,25 @@ public class StockAnalysisController {
     private YahooFinanceService yahooFinanceService;
 
     @Autowired
+    private AlphaVantageService alphaVantageService;
+
+    @Autowired
     private PredictionService predictionService;
 
 
-    @GetMapping("/predict")
-    public PredictionResult predict(@RequestParam String ticker) {
+    @GetMapping("/predict/yahoofinace")
+    public PredictionResult predictYahooFinace(@RequestParam String ticker) {
         List<StockData> stockData = yahooFinanceService.getStockData(ticker);
         List<Double> normalized = yahooFinanceService.preprocessStockData(stockData);
+
+        double prediction = predictionService.predictNextValue(normalized);
+
+        return new PredictionResult(ticker, prediction, normalized.size());
+    }
+    @GetMapping("/predict/alphavantage")
+    public PredictionResult predictAlphaVantage(@RequestParam String ticker) {
+        List<StockData> stockData = alphaVantageService.getStockData(ticker);
+        List<Double> normalized = alphaVantageService.preprocessStockData(stockData);
 
         double prediction = predictionService.predictNextValue(normalized);
 
