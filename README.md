@@ -95,3 +95,12 @@
 - API key di:
     - OpenAI (`OPENAI_API_KEY`)
     - Alpha Vantage (`ALPHAVANTAGE_API_KEY`)
+
+---
+## 📊 Esempio di Analisi Generata
+
+Questa è la risposta generata dal sistema:
+
+![Esempio di utilizzo](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/master/docs/images/usage.png)
+
+  
