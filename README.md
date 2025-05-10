@@ -101,5 +101,6 @@
 
 Questa è la risposta generata dal sistema:
 
-![Esempio Analisi]([docs/img/analysis_example.pn](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/main/docs/images/usage.png))
+![Esempio di utilizzo](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/master/docs/images/usage.png)
+
   
