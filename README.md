@@ -95,3 +95,11 @@
 - API key di:
     - OpenAI (`OPENAI_API_KEY`)
     - Alpha Vantage (`ALPHAVANTAGE_API_KEY`)
+
+---
+## 📊 Esempio di Analisi Generata
+
+Questa è la risposta generata dal sistema:
+
+![Esempio Analisi]([docs/img/analysis_example.pn](https://raw.githubusercontent.com/tuo-utente/tuo-repo/main/docs/images/usage.png)
+  
