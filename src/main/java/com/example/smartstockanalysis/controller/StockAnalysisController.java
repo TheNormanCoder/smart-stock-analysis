@@ -4,6 +4,7 @@ import com.example.smartstockanalysis.model.PredictionResult;
 import com.example.smartstockanalysis.model.StockData;
 import com.example.smartstockanalysis.service.AlphaVantageService;
 import com.example.smartstockanalysis.service.PredictionService;
+import com.example.smartstockanalysis.service.SpringAiService;
 import com.example.smartstockanalysis.service.YahooFinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,9 @@ public class StockAnalysisController {
     @Autowired
     private PredictionService predictionService;
 
+    @Autowired
+    private SpringAiService springAiService;
+
 
     @GetMapping("/predict/yahoofinace")
     public PredictionResult predictYahooFinace(@RequestParam String ticker) {
@@ -34,7 +38,9 @@ public class StockAnalysisController {
 
         double prediction = predictionService.predictNextValue(normalized);
 
-        return new PredictionResult(ticker, prediction, normalized.size());
+        String analysis = springAiService.analyzeStock(ticker, normalized, prediction);
+
+        return new PredictionResult(ticker, prediction, normalized.size(), analysis);
     }
     @GetMapping("/predict/alphavantage")
     public PredictionResult predictAlphaVantage(@RequestParam String ticker) {
@@ -43,6 +49,8 @@ public class StockAnalysisController {
 
         double prediction = predictionService.predictNextValue(normalized);
 
-        return new PredictionResult(ticker, prediction, normalized.size());
+        String analysis = springAiService.analyzeStock(ticker, normalized, prediction);
+
+        return new PredictionResult(ticker, prediction, normalized.size(), analysis);
     }
 }

@@ -30,6 +30,9 @@ public class PredictionService {
                 }
                 NDArray inputND = manager.create(inputArray).reshape(new Shape(1, input.size()));
 
+                // Initialize the model with the input shape
+                model.getBlock().initialize(manager, ai.djl.ndarray.types.DataType.FLOAT32, new Shape(1, input.size()));
+
                 Translator<NDList, NDList> translator = new Translator<>() {
                     @Override
                     public NDList processInput(TranslatorContext ctx, NDList input) {

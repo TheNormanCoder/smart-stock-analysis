@@ -5,11 +5,13 @@ public class PredictionResult {
     private String ticker;
     private double prediction;
     private int dataPoints;
+    private String analysis; // 🆕 Nuovo campo per il testo AI
 
-    public PredictionResult(String ticker, double prediction, int dataPoints) {
+    public PredictionResult(String ticker, double prediction, int dataPoints, String analysis) {
         this.ticker = ticker;
         this.prediction = prediction;
         this.dataPoints = dataPoints;
+        this.analysis = analysis;
     }
 
     public String getTicker() {
@@ -22,5 +24,9 @@ public class PredictionResult {
 
     public int getDataPoints() {
         return dataPoints;
+    }
+
+    public String getAnalysis() {
+        return analysis;
     }
 }
