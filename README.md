@@ -120,8 +120,8 @@ src/main/java/com/example/smartstockanalysis/
 ---
 Questa è la risposta generata dal sistema:
 
-![Esempio Analisi]([docs/img/analysis_example.pn](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/main/docs/images/usage 2025-05-24 130509.png))
-![Esempio di utilizzo](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/master/docs/images/usage 2025-05-24 130509.png)
+
+![Esempio di utilizzo](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/master/docs/images/usage_2025-05-24_130509.png)
 
 ---
 ## 📬 Contatti
