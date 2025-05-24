@@ -67,24 +67,12 @@
 			<version>0.32.0</version>
 		</dependency>
 
-		<!-- MXNet backend -->
 		<dependency>
-			<groupId>ai.djl.mxnet</groupId>
-			<artifactId>mxnet-engine</artifactId>
+			<groupId>ai.djl.pytorch</groupId>
+			<artifactId>pytorch-engine</artifactId>
 			<version>0.32.0</version>
 		</dependency>
-		<!-- Modelli pre-addestrati -->
-		<dependency>
-			<groupId>ai.djl.mxnet</groupId>
-			<artifactId>mxnet-model-zoo</artifactId>
-			<version>0.32.0</version>
-		</dependency>
-		<!-- MLP model block -->
-		<dependency>
-			<groupId>ai.djl</groupId>
-			<artifactId>model-zoo</artifactId>
-			<version>0.32.0</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.yahoofinance-api</groupId>
 			<artifactId>YahooFinanceAPI</artifactId>

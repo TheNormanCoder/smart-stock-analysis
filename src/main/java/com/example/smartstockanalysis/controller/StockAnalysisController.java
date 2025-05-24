@@ -61,10 +61,9 @@ public class StockAnalysisController {
         List<StockData> stockData = alphaVantageService.getStockData(ticker);
         List<Double> normalized = alphaVantageService.preprocessStockData(stockData);
 
-        double prediction = advancedPredictionService.predictNextValueWithFeatures(normalized);
+        double prediction = advancedPredictionService.predictAndRetrain(ticker, normalized);
 
         String analysis = springAiService.analyzeStock(ticker, normalized, prediction);
-
         return new PredictionResult(ticker, prediction, normalized.size(), analysis);
     }
 }

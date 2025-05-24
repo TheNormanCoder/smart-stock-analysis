@@ -1,106 +1,124 @@
-# Smart Stock Analysis
 
-> Previsione e interpretazione intelligente dei prezzi azionari usando Java, Spring Boot, DJL, Alpha Vantage e Spring AI (OpenAI GPT-4).
+# 📊 Smart Stock Analysis — Predizione Azionaria con DJL (PyTorch)
 
----
-
-## Funzionalità
-
-- ✔️ Raccolta automatica dei dati storici tramite:
-    - Yahoo Finance (con limitazioni di rate limit)
-    - **Alpha Vantage API (raccomandato)**
-- ✔️ Predizione del prezzo futuro con rete neurale semplice usando DJL (MXNet backend)
-- ✔️ Analisi descrittiva del trend tramite LLM (GPT-4/OpenAI) integrato con Spring AI
-- ✔️ API REST esposta con Spring Boot
-- ➕ Salvataggio dei dati su database
-- ➕ Dashboard frontend (in sviluppo)
+Questo progetto analizza e predice l’andamento di un titolo azionario tramite una rete neurale MLP costruita con **DJL** e **backend PyTorch**. Include anche un'integrazione con **OpenAI** per l'analisi qualitativa e la generazione di etichette di apprendimento automatico.
 
 ---
 
-## Architettura
+## 🔧 Tecnologie utilizzate
 
-```text
-[ Alpha Vantage API ]
-        ↓
-[ DJL Model (es. Linear) ]
-        ↓
-(Valore predetto)
-        ↓
-[ Spring AI + OpenAI (GPT-4) ]
-        ↓
-(Testo interpretativo)
+- ✅ Java 17
+- ✅ Spring Boot 3
+- ✅ DJL (Deep Java Library) con **PyTorch backend**
+- ✅ OpenAI API (Spring AI)
+- ✅ Docker + Docker Compose
+- ✅ AlphaVantage API
+- ✅ CSV come storage incrementale dei dati
+
+---
+
+## ⚙️ Funzionalità principali
+
+- 📈 Predizione del valore normalizzato futuro di un titolo
+- 🤖 Addestramento automatico e incrementale del modello MLP
+- 🧠 Generazione etichette tramite GPT (trend, buy signal, confidence)
+- 🔄 Salvataggio e append dei dati nel CSV per retraining continuo
+- 🌐 API REST per richiamare tutte le funzionalità
+
+---
+
+## 🚀 Avvio del progetto
+
+### 1. Prepara le variabili ambiente
+
+Crea un file `.env` o imposta manualmente:
+
+```env
+OPENAI_API_KEY=sk-xxx
+ALPHAVANTAGE_API_KEY=your_key
+```
+
+### 2. Crea le cartelle richieste (una tantum)
+
+```bash
+mkdir -p datasets models
+```
+
+### 3. Avvio con Docker
+
+```bash
+docker-compose up --build
+```
+
+L'app sarà disponibile su: [http://localhost:8080](http://localhost:8080)
+
+---
+
+## 📁 Dataset CSV
+
+Ogni chiamata all’API `/predict/alphavantage/advanced` genera una riga nel file:
+
+```
+datasets/training_data.csv
+```
+
+Questa riga contiene:
+- ✅ I 100 feature normalizzati (es. chiusura, RSI, SMA…)
+- ✅ Etichetta `trend` generata da OpenAI
+- ✅ `buySignal` booleano
+- ✅ `confidenceScore` numerico
+
+Il file viene poi usato per **riaddestrare** automaticamente il modello neurale.
+
+---
+
+## 📡 Endpoint API disponibili
+
+| Endpoint | Descrizione |
+|----------|-------------|
+| `/predict/alphavantage?ticker=SIMBOLO` | Predizione semplice basata su dati storici |
+| `/predict/alphavantage/advanced?ticker=SIMBOLO` | 🔥 Predizione + retraining + analisi GPT |
+| `/predict/yahoo?ticker=SIMBOLO` | Predizione basata su Yahoo Finance |
+| `/model/train?datasetPath=...&modelPath=...` | Training manuale del modello |
+
+---
+
+## 🛠️ Struttura del progetto
+
+```
+src/main/java/com/example/smartstockanalysis/
+├── controller/
+│   └── StockAnalysisController.java
+├── model/
+│   └── PredictionResult.java
+├── service/
+│   ├── AlphaVantageService.java
+│   ├── YahooFinanceService.java
+│   ├── SpringAiService.java
+│   ├── training/
+│   │   ├── ModelTrainingService.java
+│   │   ├── ModelTrainer.java
+│   │   └── ModelConfigFactory.java
+│   └── prediction/
+│       └── AdvancedPredictionService.java
+├── utils/
+│   ├── DatasetUtils.java
+│   ├── FeatureEngineeringUtils.java
+│   └── LLMResponseParser.java
 ```
 
 ---
 
-## Esecuzione con Docker
+## 🧪 Test futuri / TODO
 
-### Prerequisiti
-- Docker installato sul sistema
-- Docker Compose installato
-- API key valide per:
-    - OpenAI (`OPENAI_API_KEY`)
-    - Alpha Vantage (`ALPHAVANTAGE_API_KEY`)
-
-### Setup e avvio
-
-1. **Clona il repository**
-   ```bash
-   git clone <url-repository>
-   cd smart-stock-analysis
-   ```
-
-2. **Esporta le variabili d'ambiente**
-   ```bash
-   export OPENAI_API_KEY=la-tua-api-key
-   export ALPHAVANTAGE_API_KEY=la-tua-api-key
-   ```
-
-3. **Costruisci e avvia l'applicazione**
-   ```bash
-   docker-compose up --build
-   ```
-
-4. **Accedi all'applicazione**
-   Apri il browser all'indirizzo: [http://localhost:8080](http://localhost:8080)
+- [ ] Integrazione salvataggio su database
+- [ ] Gestione versioning dataset (es. `training_data-v1.csv`)
+- [ ] Valutazione metrica modello su batch storici
+- [ ] Esportazione modello preaddestrato
+- [ ] Dashboard frontend per visualizzazione predizioni
 
 ---
 
-### Endpoint API disponibili
+## 📬 Contatti
 
-- `/predict/yahoofinace?ticker=SIMBOLO` — Previsione utilizzando Yahoo Finance (soggetto a limiti)
-- `/predict/alphavantage?ticker=SIMBOLO` — ✅ **Previsione consigliata con Alpha Vantage**
-- `/explain?ticker=SIMBOLO` — Interpretazione dei dati tramite GPT-4
-
----
-
-### Note per lo sviluppo
-
-- Esecuzione locale:
-  ```bash
-  mvn spring-boot:run
-  ```
-- Esecuzione test:
-  ```bash
-  mvn test
-  ```
-
----
-
-## Requisiti
-
-- Java 17+
-- Maven 3.8+
-- Docker + Docker Compose
-- API key di:
-    - OpenAI (`OPENAI_API_KEY`)
-    - Alpha Vantage (`ALPHAVANTAGE_API_KEY`)
-
----
-## 📊 Esempio di Analisi Generata
-
-Questa è la risposta generata dal sistema:
-
-![Esempio di utilizzo](https://raw.githubusercontent.com/TheNormanCoder/smart-stock-analysis/master/docs/images/usage.png)
-
-  
+> Creato da NWB con DJL, Spring AI e tanta curiosità 😎
