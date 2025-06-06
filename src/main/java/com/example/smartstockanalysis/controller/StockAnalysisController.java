@@ -34,8 +34,8 @@ public class StockAnalysisController {
     private SpringAiService springAiService;
 
 
-    @GetMapping("/predict/yahoofinace")
-    public PredictionResult predictYahooFinace(@RequestParam String ticker) {
+    @GetMapping("/predict/yahoofinance")
+    public PredictionResult predictYahooFinance(@RequestParam String ticker) {
         List<StockData> stockData = yahooFinanceService.getStockData(ticker);
         List<Double> normalized = yahooFinanceService.preprocessStockData(stockData);
 
