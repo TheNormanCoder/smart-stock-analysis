@@ -25,6 +25,14 @@ public class DataPreprocessingUtils {
         double max = closingPrices.stream().max(Double::compareTo).orElse(1.0);
 
         List<Double> normalized = new ArrayList<>();
+
+        // Se tutti i valori sono uguali, restituisce una lista di zeri
+        if (Double.compare(max, min) == 0) {
+            for (int i = 0; i < closingPrices.size(); i++) {
+                normalized.add(0.0);
+            }
+            return normalized;
+        }
         for (double value : closingPrices) {
             double norm = (value - min) / (max - min);
             normalized.add(norm);
