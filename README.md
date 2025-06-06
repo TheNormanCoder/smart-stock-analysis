@@ -78,7 +78,7 @@ Il file viene poi usato per **riaddestrare** automaticamente il modello neurale.
 |----------|-------------|
 | `/predict/alphavantage?ticker=SIMBOLO` | Predizione semplice basata su dati storici |
 | `/predict/alphavantage/advanced?ticker=SIMBOLO` | 🔥 Predizione + retraining + analisi GPT |
-| `/predict/yahoo?ticker=SIMBOLO` | Predizione basata su Yahoo Finance |
+| `/predict/yahoofinance?ticker=SIMBOLO` | Predizione basata su Yahoo Finance |
 | `/model/train?datasetPath=...&modelPath=...` | Training manuale del modello |
 
 ---
