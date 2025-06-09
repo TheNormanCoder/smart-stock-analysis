@@ -4,6 +4,11 @@ package com.example.smartstockanalysis;
 import com.example.smartstockanalysis.config.TestAlphaVantageConfig;
 import com.example.smartstockanalysis.config.TestOpenAiConfig;
 import com.example.smartstockanalysis.service.SpringAiService;
+import com.example.smartstockanalysis.service.AlphaVantageService;
+import com.example.smartstockanalysis.model.StockData;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -33,11 +38,26 @@ class StockAnalysisControllerTest {
     @MockitoBean
     private SpringAiService springAiService; //
 
+    @MockitoBean
+    private AlphaVantageService alphaVantageService;
+
     @Test
     void testPredictAlphaVantageWithMockedAI() throws Exception {
-        // Definiamo il comportamento mockato
+        // Mock SpringAiService
         when(springAiService.analyzeStock(anyString(), anyList(), anyDouble()))
                 .thenReturn("Mocked analysis response.");
+
+        // Prepare sample stock data
+        List<StockData> sampleData = Arrays.asList(
+                new StockData(new Date(), 0, 0, 0, 10.0, 0),
+                new StockData(new Date(), 0, 0, 0, 20.0, 0),
+                new StockData(new Date(), 0, 0, 0, 30.0, 0)
+        );
+        List<Double> normalized = Arrays.asList(0.0, 0.5, 1.0);
+
+        // Mock AlphaVantageService so no real HTTP call is made
+        when(alphaVantageService.getStockData(anyString())).thenReturn(sampleData);
+        when(alphaVantageService.preprocessStockData(anyList())).thenReturn(normalized);
 
         mockMvc.perform(get("/predict/alphavantage")
                         .param("ticker", "AAPL"))
