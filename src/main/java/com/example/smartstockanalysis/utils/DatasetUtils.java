@@ -19,7 +19,7 @@ public class DatasetUtils {
                 datasetDir.mkdirs();
             }
 
-            FileWriter writer = new FileWriter("datasets/training_data.csv", true);
+            FileWriter writer = new FileWriter(DATASET_PATH, true);
             StringBuilder line = new StringBuilder();
 
             for (Double feature : features) {
